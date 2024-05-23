@@ -1,39 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StatusBar, Text, View, StyleSheet } from 'react-native';
-
-interface ProductsProps {
-  title: string;
-  id: string;
-}
+import { useGetAllProducstsQuery } from '../../store/services/products';
+import { Product } from '../../store/services/types';
 
 export const HomeScreen = () => {
-  const [products, setProducts] = useState<ProductsProps[]>([]);
+  const { currentData } = useGetAllProducstsQuery();
 
-  const getProducts = async () => {
-    const response = await fetch('https://fakestoreapi.com/products');
-    const data = await response.json();
-    console.log(data);
-    setProducts(data);
-  };
-
-  type ItemProps = { title: string };
-
-  const Item = ({ title }: ItemProps) => (
+  const Item = ({ title }: Product) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
     </View>
   );
 
-  useEffect(() => {
-    getProducts();
-  }, []);
-
   return (
     <View>
       <FlatList
-        data={products}
+        data={currentData}
         renderItem={({ item }) => <Item title={item.title} />}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id!.toString()}
       />
     </View>
   );
