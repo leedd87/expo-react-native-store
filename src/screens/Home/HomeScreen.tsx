@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StatusBar, Text, View, StyleSheet } from 'react-native';
-import { useGetAllProducstsQuery } from '../../store/services/products';
-import { Product } from '../../store/services/types';
+import {
+  useGetAllCategoriesQuery,
+  useGetAllProductsQuery,
+} from '../../store/features/Products/productsApiSlice';
+import { Product } from '../../store/features/Products/types';
 
 export const HomeScreen = () => {
-  const { currentData } = useGetAllProducstsQuery();
+  const { currentData: allProducts } = useGetAllProductsQuery();
+  const { currentData: allCategories } = useGetAllCategoriesQuery();
 
   const Item = ({ title }: Product) => (
     <View style={styles.item}>
@@ -15,7 +19,7 @@ export const HomeScreen = () => {
   return (
     <View>
       <FlatList
-        data={currentData}
+        data={allProducts}
         renderItem={({ item }) => <Item title={item.title} />}
         keyExtractor={(item) => item.id!.toString()}
       />
