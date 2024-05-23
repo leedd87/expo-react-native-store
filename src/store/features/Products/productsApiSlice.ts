@@ -8,10 +8,10 @@ export const productsApi = createApi({
     getAllProducts: builder.query<Product[], void>({
       query: () => `/products`,
     }),
-    getAllCategories: builder.query<[], void>({
-      query: () => `/products/categories`,
+    getSingleProduct: builder.query<Product, string>({
+      query: (id) => `products/${id}`,
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetAllCategoriesQuery } = productsApi;
+export const { useGetAllProductsQuery, useGetSingleProductQuery } = productsApi;
