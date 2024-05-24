@@ -9,6 +9,8 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {
+  useAddNewProductMutation,
+  useDeleteProductMutation,
   useGetAllProductsQuery,
   useGetSingleProductQuery,
 } from '../../store/features/Products/productsApiSlice';
@@ -17,6 +19,7 @@ import { Product } from '../../store/features/Products/types';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { setAllProducts } from '../../store/features/Products/productsSlice';
+import { SingleProduct } from './components';
 
 export const HomeScreen = () => {
   const dispatch = useAppDispatch();
@@ -25,21 +28,44 @@ export const HomeScreen = () => {
   );
   const { currentData: apiAllProducts } = useGetAllProductsQuery();
   const { currentData: allCategories } = useGetAllCategoriesQuery();
-  const { currentData: singleProduct } = useGetSingleProductQuery('1');
-  // console.log(
-  //   '🚀 ~ file: HomeScreen.tsx:12 ~ HomeScreen ~ allProducts:',
-  //   JSON.stringify(allProducts, null, 2)
-  // );
+  const [hasSameId, setHasSameId] = useState('');
+
+  const body = {
+    title: 'test product',
+    price: '13.5',
+    description: 'lorem ipsum set',
+    image: 'https://i.pravatar.cc',
+    category: 'electronic',
+  };
+
+  const [addNewProduct, addNewProductResults] = useAddNewProductMutation();
+  const [deleteProduct, { isLoading, data, status, originalArgs }] =
+    useDeleteProductMutation();
 
   const getProducts = () => {
     dispatch(setAllProducts(apiAllProducts));
-    console.log('dispatch hecho');
   };
 
-  const Item = ({ title, price, description }: Product) => (
+  const getSingleProduct = (id: string) => {
+    setHasSameId(id);
+  };
+
+  const crearProducto = (body: Partial<Product>) => {
+    addNewProduct(body);
+    console.log(body);
+  };
+
+  const borrarProducto = () => {
+    deleteProduct('1');
+  };
+
+  const Item = ({ title, price, description, id }: Product) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.title}>{price}</Text>
+      {hasSameId === id && (
+        <SingleProduct title={title} price={price} id={id} />
+      )}
     </View>
   );
 
@@ -52,11 +78,27 @@ export const HomeScreen = () => {
       >
         <Text style={{ fontSize: 18 }}>DAME PRODUCTOS</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
+        onPress={() => crearProducto(body)}
+      >
+        <Text style={{ fontSize: 18 }}>Crear PRODUCTOS</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
+        onPress={borrarProducto}
+      >
+        <Text style={{ fontSize: 18 }}>BORRAR PRODUCTOS</Text>
+      </TouchableOpacity>
       {allProducts ? (
         <FlatList
           data={allProducts}
           renderItem={({ item }) => (
-            <Item title={item.title} price={item.price} />
+            <>
+              <TouchableOpacity onPress={() => getSingleProduct(item.id)}>
+                <Item title={item.title} price={item.price} id={item.id} />
+              </TouchableOpacity>
+            </>
           )}
           keyExtractor={(item) => item.id!.toString()}
         />

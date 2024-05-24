@@ -9,9 +9,36 @@ export const productsApi = createApi({
       query: () => `/products`,
     }),
     getSingleProduct: builder.query<Product, string>({
-      query: (id) => `products/${id}`,
+      query: (id) => `/products/${id}`,
+    }),
+    addNewProduct: builder.mutation<Product, Partial<Product>>({
+      query: ({ title, price, description, image, category }) => ({
+        url: `/products`,
+        method: 'POST',
+        body: {
+          title,
+          price,
+          description,
+          image,
+          category,
+        },
+      }),
+      transformResponse: (response: { data: Product }) => {
+        return response.data;
+      },
+    }),
+    deleteProduct: builder.mutation<{ success: boolean; id: string }, string>({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: 'DELETE',
+      }),
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetSingleProductQuery } = productsApi;
+export const {
+  useGetAllProductsQuery,
+  useGetSingleProductQuery,
+  useAddNewProductMutation,
+  useDeleteProductMutation,
+} = productsApi;
