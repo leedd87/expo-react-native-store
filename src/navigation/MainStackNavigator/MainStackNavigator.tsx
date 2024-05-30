@@ -17,11 +17,11 @@ export const MainStackNavigator = () => {
   return (
     <Stack.Navigator>
       {isLogIn ? (
-        <Stack.Group>
+        <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={HomeScreen} />
         </Stack.Group>
       ) : (
-        <Stack.Group>
+        <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={LoginScreen} />
         </Stack.Group>
       )}
