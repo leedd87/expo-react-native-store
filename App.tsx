@@ -1,25 +1,19 @@
+import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { HomeScreen } from './src/screens';
 import { Provider } from 'react-redux';
 import { store } from './src/store/index';
+import { MainStackNavigator } from './src/navigation/MainStackNavigator/MainStackNavigator';
+import { NavigationContainer } from '@react-navigation/native';
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <HomeScreen />
+    <NavigationContainer>
+      <Provider store={store}>
+        <MainStackNavigator />
         <StatusBar style="auto" />
-      </View>
-    </Provider>
+      </Provider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
