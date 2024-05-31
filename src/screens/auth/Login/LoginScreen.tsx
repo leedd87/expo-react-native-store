@@ -1,12 +1,37 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Input, Layout, Text } from '@ui-kitten/components';
 import { CustomIcon } from '../../../common/CustomIcon/CustomIcon';
+import { useLogInMutation } from '../../../store/features/Auth/authApiSlice';
+import { useAppDispatch } from '../../../store/hooks/hooks';
+import { setLogIn } from '../../../store/features/Auth/authSlice';
 
 export const LoginScreen = () => {
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState({
     email: '',
     password: '',
   });
+
+  const [logIn, { isSuccess, data }] = useLogInMutation();
+
+  const onPressLogin = async () => {
+    const result = await logIn({
+      email: form.email,
+      password: form.password,
+    }).unwrap();
+    console.log(result);
+    dispatch(setLogIn(result));
+  };
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     console.log('EL LOGIN FUE SUCCESS');
+  //   }
+  // }, [isSuccess]);
+
+  // useEffect(() => {
+  //   console.log('RESULTADOS POST LOGIN', data);
+  // }, [data]);
 
   return (
     <Layout
@@ -41,9 +66,7 @@ export const LoginScreen = () => {
       </Layout>
 
       <Button
-        onPress={() => {
-          console.log('HOLA');
-        }}
+        onPress={onPressLogin}
         accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
       >
         Ingresar

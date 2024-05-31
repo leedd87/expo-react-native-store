@@ -20,6 +20,7 @@ import { Product } from '../../store/features/Products/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { setAllProducts } from '../../store/features/Products/productsSlice';
 import { SingleProduct } from './components';
+import { setLogOut } from '../../store/features/Auth/authSlice';
 
 export const HomeScreen = () => {
   const dispatch = useAppDispatch();
@@ -59,6 +60,10 @@ export const HomeScreen = () => {
     deleteProduct('1');
   };
 
+  const cerrarSesion = async () => {
+    await dispatch(setLogOut());
+  };
+
   const Item = ({ title, price, description, id }: Product) => (
     <View style={styles.item}>
       <Text style={styles.title}>{title}</Text>
@@ -89,6 +94,12 @@ export const HomeScreen = () => {
         onPress={borrarProducto}
       >
         <Text style={{ fontSize: 18 }}>BORRAR PRODUCTOS</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
+        onPress={cerrarSesion}
+      >
+        <Text style={{ fontSize: 18 }}>CERRAR SESION</Text>
       </TouchableOpacity>
       {allProducts ? (
         <FlatList
