@@ -3,7 +3,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { Product } from '../../../../store/features/Products/types';
 import { useGetSingleProductQuery } from '../../../../store/features/Products/productsApiSlice';
 
-export const SingleProduct = ({ id }: Product) => {
+export const DetailProduct = ({ id }: Product) => {
   const { currentData: singleProduct, isLoading } =
     useGetSingleProductQuery(id);
 

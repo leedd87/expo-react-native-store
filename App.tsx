@@ -10,10 +10,11 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { default as theme } from './src/theme/theme.json';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function App() {
   return (
-    <>
+    <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
         <NavigationContainer>
@@ -23,6 +24,6 @@ export default function App() {
           </Provider>
         </NavigationContainer>
       </ApplicationProvider>
-    </>
+    </SafeAreaProvider>
   );
 }

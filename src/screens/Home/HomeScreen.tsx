@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
   FlatList,
   StatusBar,
-  Text,
   View,
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {
   useAddNewProductMutation,
@@ -19,14 +20,29 @@ import { Product } from '../../store/features/Products/types';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { setAllProducts } from '../../store/features/Products/productsSlice';
-import { SingleProduct } from './components';
-import { setLogOut } from '../../store/features/Auth/authSlice';
+
+import { logOut } from '../../store/features/Auth/authSlice';
+import {
+  Button,
+  Input,
+  Layout,
+  List,
+  Text,
+  useTheme,
+} from '@ui-kitten/components';
+import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DetailProduct, ProductCard } from './components';
 
 export const HomeScreen = () => {
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const theme = useTheme();
+  const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
   );
+
   const { currentData: apiAllProducts } = useGetAllProductsQuery();
   const { currentData: allCategories } = useGetAllCategoriesQuery();
   const [hasSameId, setHasSameId] = useState('');
@@ -61,7 +77,7 @@ export const HomeScreen = () => {
   };
 
   const cerrarSesion = async () => {
-    await dispatch(setLogOut());
+    await dispatch(logOut());
   };
 
   const Item = ({ title, price, description, id }: Product) => (
@@ -69,52 +85,68 @@ export const HomeScreen = () => {
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.title}>{price}</Text>
       {hasSameId === id && (
-        <SingleProduct title={title} price={price} id={id} />
+        <DetailProduct title={title} price={price} id={id} />
       )}
     </View>
   );
 
   return (
-    //CHANGE SafeAreaView WHEN USING REACT NAVIGATION
-    <SafeAreaView>
-      <TouchableOpacity
-        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
-        onPress={getProducts}
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      style={{ backgroundColor: theme['color-basic-800'] }}
+    >
+      <Layout
+        style={{
+          flex: 1,
+          paddingTop: top,
+        }}
       >
-        <Text style={{ fontSize: 18 }}>DAME PRODUCTOS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
-        onPress={() => crearProducto(body)}
-      >
-        <Text style={{ fontSize: 18 }}>Crear PRODUCTOS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
-        onPress={borrarProducto}
-      >
-        <Text style={{ fontSize: 18 }}>BORRAR PRODUCTOS</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{ backgroundColor: 'gray', padding: 10, borderWidth: 1 }}
-        onPress={cerrarSesion}
-      >
-        <Text style={{ fontSize: 18 }}>CERRAR SESION</Text>
-      </TouchableOpacity>
-      {allProducts ? (
-        <FlatList
-          data={allProducts}
-          renderItem={({ item }) => (
-            <>
-              <TouchableOpacity onPress={() => getSingleProduct(item.id)}>
-                <Item title={item.title} price={item.price} id={item.id} />
-              </TouchableOpacity>
-            </>
-          )}
-          keyExtractor={(item) => item.id!.toString()}
-        />
-      ) : null}
-    </SafeAreaView>
+        <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+          <Text category="h1">Home</Text>
+          <Button
+            onPress={getProducts}
+            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
+          >
+            Get Products
+          </Button>
+        </Layout>
+        <Layout style={{ marginTop: 20, gap: 20 }}>
+          {allProducts
+            ? allProducts.map((item) => (
+                <Layout
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    alignItems: 'flex-start',
+                  }}
+                >
+                  <ProductCard
+                    title={item.title}
+                    image={item.image}
+                    price={item.price}
+                  />
+                </Layout>
+              ))
+            : null}
+
+          {/* <Button
+            onPress={() => {}}
+            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
+          >
+            Create Products
+          </Button>
+          <Button
+            onPress={() => {}}
+            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
+          >
+            Remove Products
+          </Button> */}
+        </Layout>
+
+        <Layout style={{ paddingVertical: 20 }} />
+      </Layout>
+    </ScrollView>
   );
 };
 
