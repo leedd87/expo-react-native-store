@@ -76,77 +76,44 @@ export const HomeScreen = () => {
     deleteProduct('1');
   };
 
-  const cerrarSesion = async () => {
-    await dispatch(logOut());
-  };
-
-  const Item = ({ title, price, description, id }: Product) => (
-    <View style={styles.item}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.title}>{price}</Text>
-      {hasSameId === id && (
-        <DetailProduct title={title} price={price} id={id} />
-      )}
-    </View>
-  );
-
   return (
-    <ScrollView
-      contentContainerStyle={{ flexGrow: 1 }}
-      style={{ backgroundColor: theme['color-basic-800'] }}
+    <Layout
+      style={{
+        flex: 1,
+        paddingTop: top,
+      }}
     >
-      <Layout
-        style={{
-          flex: 1,
-          paddingTop: top,
-        }}
-      >
-        <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
-          <Text category="h1">Home</Text>
-          <Button
-            onPress={getProducts}
-            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
-          >
-            Get Products
-          </Button>
-        </Layout>
-        <Layout style={{ marginTop: 20, gap: 20 }}>
-          {allProducts
-            ? allProducts.map((item) => (
-                <Layout
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    alignItems: 'flex-start',
-                  }}
-                >
-                  <ProductCard
-                    title={item.title}
-                    image={item.image}
-                    price={item.price}
-                  />
-                </Layout>
-              ))
-            : null}
-
-          {/* <Button
-            onPress={() => {}}
-            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
-          >
-            Create Products
-          </Button>
-          <Button
-            onPress={() => {}}
-            accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
-          >
-            Remove Products
-          </Button> */}
-        </Layout>
-
-        <Layout style={{ paddingVertical: 20 }} />
+      <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+        <Text category="h1">Home</Text>
+        <Button
+          onPress={getProducts}
+          accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
+        >
+          Get Products
+        </Button>
       </Layout>
-    </ScrollView>
+      <Layout style={{ marginTop: 20, gap: 20 }}>
+        {allProducts ? (
+          <List
+            data={allProducts}
+            renderItem={({ item }) => (
+              <ProductCard
+                title={item.title}
+                image={item.image}
+                price={item.price}
+                description={item.description}
+              />
+            )}
+            numColumns={2}
+            ListFooterComponent={() => <Layout style={{ height: 150 }} />}
+            onEndReachedThreshold={0.8}
+          />
+        ) : null}
+      </Layout>
+
+      <Layout style={{ paddingVertical: 20 }} />
+    </Layout>
+    // </ScrollView>
   );
 };
 
