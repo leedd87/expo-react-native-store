@@ -35,7 +35,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { DetailProduct, ProductCard } from './components';
 
 export const HomeScreen = () => {
-  const [isRefreshing, setIsRefreshing] = useState(false);
   const theme = useTheme();
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();

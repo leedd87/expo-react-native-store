@@ -6,9 +6,15 @@ interface CustomIconProps {
   name: string;
   color?: string;
   white?: boolean;
+  focused?: boolean;
 }
 
-export const CustomIcon = ({ name, color, white = false }: CustomIconProps) => {
+export const CustomIcon = ({
+  name,
+  color,
+  white = false,
+  focused,
+}: CustomIconProps) => {
   const theme = useTheme();
 
   if (white) {
@@ -19,7 +25,7 @@ export const CustomIcon = ({ name, color, white = false }: CustomIconProps) => {
     color = theme[color] ?? theme['text-basic-color'];
   }
 
-  return <Icon style={styles.icon} name={name} fill={color} />;
+  return <Icon style={styles.icon} name={name} fill={color} stroke={color} />;
 };
 
 const styles = StyleSheet.create({

@@ -3,12 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { LoginScreen } from '../../screens/auth/Login/LoginScreen';
 import { useAppSelector } from '../../store/hooks/hooks';
 import { TabStackNavigator } from '../TabStackNavigator/TabStackNavigator';
+import { DetailScreen } from '../../screens/Detail/DetailScreen';
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Register: undefined;
   TabNavigator: undefined;
+  Detail: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -21,6 +23,7 @@ export const MainStackNavigator = () => {
       {isLogin === 'authenticated' ? (
         <Stack.Group screenOptions={{ headerShown: false }}>
           <Stack.Screen name="TabNavigator" component={TabStackNavigator} />
+          <Stack.Screen name="Detail" component={DetailScreen} />
         </Stack.Group>
       ) : (
         <Stack.Group screenOptions={{ headerShown: false }}>

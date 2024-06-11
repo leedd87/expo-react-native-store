@@ -1,9 +1,11 @@
-import React from 'react';
-import { Button, Layout, Text } from '@ui-kitten/components';
+import React, { useState } from 'react';
+import { Button, Layout, Text, useTheme } from '@ui-kitten/components';
 import { Product } from '../../../../store/features/Products/types';
 import { Image } from 'react-native';
 import { CustomIcon } from '../../../../common/CustomIcon/CustomIcon';
 import { FAB } from '../../../../common/FAB/FAB';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../../../navigation/MainStackNavigator/MainStackNavigator';
 
 export const ProductCard = ({
   title,
@@ -11,6 +13,14 @@ export const ProductCard = ({
   description,
   image,
 }: Partial<Product>) => {
+  const theme = useTheme();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const onPressFavorite = () => {
+    setIsFavorite(!isFavorite);
+    !isFavorite ? console.log('IS FAVORITE') : console.log('NOT FAVORITE');
+  };
   return (
     <Layout
       style={{
@@ -29,15 +39,33 @@ export const ProductCard = ({
           marginTop: 15,
         }}
       />
-      <Layout style={{ flex: 1 }}>
-        <Text category="h6">{title}</Text>
-        <Text>{description}</Text>
-        <Text category="h4">{`$ ${price}`}</Text>
-
+      <FAB
+        iconName="heart-outline"
+        onPress={onPressFavorite}
+        style={{
+          position: 'absolute',
+          right: 10,
+          top: 10,
+          height: 10,
+          width: 10,
+          backgroundColor: isFavorite ? 'red' : theme['color-primary-400'],
+          borderColor: isFavorite ? 'red' : theme['color-primary-400'],
+        }}
+      />
+      <Layout style={{ flex: 1, padding: 10 }}>
+        <Layout style={{ paddingBottom: 100 }}>
+          <Text category="h6">{title}</Text>
+        </Layout>
+        <Text
+          category="h6"
+          style={{ position: 'absolute', left: 10, bottom: 10 }}
+        >{`$ ${price}`}</Text>
         <FAB
           iconName="plus-outline"
-          onPress={() => {}}
-          style={{ position: 'absolute', right: 15, bottom: 15 }}
+          onPress={() => {
+            navigation.navigate('Detail');
+          }}
+          style={{ position: 'absolute', right: 10, bottom: 10 }}
         />
       </Layout>
     </Layout>
