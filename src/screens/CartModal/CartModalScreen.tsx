@@ -3,8 +3,6 @@ import { Layout, Text, Button, Modal } from '@ui-kitten/components';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch } from '../../store/hooks/hooks';
-import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
-import { Dimensions } from 'react-native';
 
 export const CartModalScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
