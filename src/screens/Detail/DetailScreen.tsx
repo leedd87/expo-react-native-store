@@ -12,36 +12,78 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/MainStackNavigator/MainStackNavigator';
+import { Image } from 'react-native';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'Detail'>>();
-  console.log('routa params', route);
+  const { title, price, description, image } = route.params;
+
   return (
     <Layout
       style={{
         paddingHorizontal: 30,
         flex: 1,
         paddingTop: top,
+        justifyContent: 'space-between',
       }}
     >
-      <Layout
-        style={{
-          paddingTop: 30 * 0.35,
+      <Layout>
+        <Layout
+          style={{
+            paddingTop: 30 * 0.35,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text category="h1">Detail</Text>
+        </Layout>
 
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Text category="h1">Detail</Text>
+        <FAB
+          iconName="arrow-back"
+          onPress={() => navigation.goBack()}
+          style={{ position: 'absolute', top: 0, left: 0 }}
+        />
+        <Layout style={{ margin: 20 }} />
+        <Layout
+          style={{
+            gap: 10,
+
+            justifyContent: 'space-between',
+          }}
+        >
+          <Layout
+            style={{
+              backgroundColor: 'white',
+              paddingBottom: 15,
+            }}
+          >
+            <Image
+              source={{ uri: image }}
+              style={{
+                height: 200,
+                width: '100%',
+                resizeMode: 'contain',
+                marginTop: 15,
+              }}
+            />
+          </Layout>
+          <Text category="h6">{title}</Text>
+          <Text category="h2">{`$ ${price}`}</Text>
+          <Text>{description}</Text>
+        </Layout>
       </Layout>
-
       <FAB
-        iconName="arrow-back"
-        onPress={() => navigation.goBack()}
-        style={{ position: 'absolute', top: top, left: 20 }}
+        iconName="shopping-cart"
+        onPress={() => {
+          //GOBACK Y DISPATCH A CARRITO
+          navigation.goBack();
+        }}
+        style={{
+          marginBottom: 30,
+        }}
       />
     </Layout>
   );
