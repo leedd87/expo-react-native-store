@@ -4,24 +4,43 @@ import { Layout, Text, Button } from '@ui-kitten/components';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch } from '../../store/hooks/hooks';
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
+import { FAB } from '../../common/FAB/FAB';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/MainStackNavigator/MainStackNavigator';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute();
   return (
     <Layout
       style={{
+        paddingHorizontal: 30,
         flex: 1,
         paddingTop: top,
-        paddingHorizontal: 30,
       }}
     >
-      <Layout style={{ paddingTop: 30 * 0.35 }}>
+      <Layout
+        style={{
+          paddingTop: 30 * 0.35,
+
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Text category="h1">Detail</Text>
       </Layout>
-      <Layout style={{ marginTop: 20, gap: 20 }}>{/*SOMETHING */}</Layout>
 
-      <Layout style={{ paddingVertical: 20 }} />
+      <FAB
+        iconName="arrow-back"
+        onPress={() => navigation.goBack()}
+        style={{ position: 'absolute', top: top, left: 20 }}
+      />
     </Layout>
   );
 };
