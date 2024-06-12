@@ -112,7 +112,6 @@ export const HomeScreen = () => {
 
       <Layout style={{ paddingVertical: 20 }} />
     </Layout>
-    // </ScrollView>
   );
 };
 

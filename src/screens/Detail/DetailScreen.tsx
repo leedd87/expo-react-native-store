@@ -7,6 +7,7 @@ import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { FAB } from '../../common/FAB/FAB';
 import {
   NavigationProp,
+  RouteProp,
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
@@ -16,7 +17,8 @@ export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const route = useRoute();
+  const route = useRoute<RouteProp<RootStackParamList, 'Detail'>>();
+  console.log('routa params', route);
   return (
     <Layout
       style={{

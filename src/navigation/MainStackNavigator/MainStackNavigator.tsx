@@ -4,13 +4,19 @@ import { LoginScreen } from '../../screens/auth/Login/LoginScreen';
 import { useAppSelector } from '../../store/hooks/hooks';
 import { TabStackNavigator } from '../TabStackNavigator/TabStackNavigator';
 import { DetailScreen } from '../../screens/Detail/DetailScreen';
+import { Product } from '../../store/features/Products/types';
 
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Register: undefined;
   TabNavigator: undefined;
-  Detail: undefined;
+  Detail: {
+    title?: string;
+    price?: string;
+    description?: string;
+    image?: string;
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();

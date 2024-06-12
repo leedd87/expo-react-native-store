@@ -63,7 +63,12 @@ export const ProductCard = ({
         <FAB
           iconName="plus-outline"
           onPress={() => {
-            navigation.navigate('Detail');
+            navigation.navigate('Detail', {
+              title,
+              price,
+              description,
+              image,
+            });
           }}
           style={{ position: 'absolute', right: 10, bottom: 10 }}
         />
