@@ -19,6 +19,7 @@ export type RootStackParamList = {
     price?: string;
     description?: string;
     image?: string;
+    id: string;
   };
   Modal: undefined;
 };

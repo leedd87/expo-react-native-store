@@ -12,7 +12,8 @@ export const ProductCard = ({
   price,
   description,
   image,
-}: Partial<Product>) => {
+  id,
+}: Product) => {
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -68,6 +69,7 @@ export const ProductCard = ({
               price,
               description,
               image,
+              id,
             });
           }}
           style={{ position: 'absolute', right: 10, bottom: 10 }}

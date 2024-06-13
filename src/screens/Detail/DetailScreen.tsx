@@ -12,14 +12,20 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/MainStackNavigator/MainStackNavigator';
-import { Image } from 'react-native';
+import { ActivityIndicator, Image } from 'react-native';
+import { DetailProduct } from './components';
+import { useGetSingleProductQuery } from '../../store/features/Products/productsApiSlice';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const route = useRoute<RouteProp<RootStackParamList, 'Detail'>>();
-  const { title, price, description, image } = route.params;
+  //Two ways to get Single Product Detail
+  const { title, price, description, image, id } = route.params;
+  //Al hacer dispatch enviar singleProduct => ya que tiene toda la info del producto
+  const { currentData: singleProduct, isLoading } =
+    useGetSingleProductQuery(id);
 
   return (
     <Layout
@@ -30,63 +36,55 @@ export const DetailScreen = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Layout>
+      {isLoading ? (
         <Layout
           style={{
-            paddingTop: 30 * 0.35,
             justifyContent: 'center',
-            alignItems: 'center',
+            flex: 1,
           }}
         >
-          <Text category="h1">Detail</Text>
+          <ActivityIndicator size="large" color="#FE9000" />
         </Layout>
-
-        <FAB
-          iconName="arrow-back"
-          onPress={() => navigation.goBack()}
-          style={{ position: 'absolute', top: 0, left: 0 }}
-        />
-        <Layout style={{ margin: 20 }} />
-        <Layout
-          style={{
-            gap: 10,
-
-            justifyContent: 'space-between',
-          }}
-        >
-          <Layout
-            style={{
-              backgroundColor: 'white',
-              paddingBottom: 15,
-            }}
-          >
-            <Image
-              source={{ uri: image }}
+      ) : (
+        <>
+          <Layout>
+            <Layout
               style={{
-                height: 200,
-                width: '100%',
-                resizeMode: 'contain',
-                marginTop: 15,
+                paddingTop: 30 * 0.35,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text category="h1">Detail</Text>
+            </Layout>
+
+            <FAB
+              iconName="arrow-back"
+              onPress={() => navigation.goBack()}
+              style={{ position: 'absolute', top: 0, left: 0 }}
+            />
+            <Layout style={{ margin: 20 }} />
+            <DetailProduct
+              title={singleProduct?.title}
+              description={singleProduct?.description}
+              image={singleProduct?.image}
+              price={singleProduct?.price}
+            />
+          </Layout>
+          <Layout style={{ gap: 10 }}>
+            <FAB
+              iconName="shopping-cart"
+              onPress={() => {
+                //TODO navigateo to cart Y DISPATCH A CARRITO
+                navigation.navigate('TabNavigator', { screen: 'Cart' });
+              }}
+              style={{
+                marginBottom: 30,
               }}
             />
           </Layout>
-          <Text category="h6">{title}</Text>
-          <Text category="h2">{`$ ${price}`}</Text>
-          <Text>{description}</Text>
-        </Layout>
-      </Layout>
-      <Layout style={{ gap: 10 }}>
-        <FAB
-          iconName="shopping-cart"
-          onPress={() => {
-            //TODO navigateo to cart Y DISPATCH A CARRITO
-            navigation.navigate('TabNavigator', { screen: 'Cart' });
-          }}
-          style={{
-            marginBottom: 30,
-          }}
-        />
-      </Layout>
+        </>
+      )}
     </Layout>
   );
 };

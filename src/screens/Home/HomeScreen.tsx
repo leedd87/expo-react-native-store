@@ -32,7 +32,7 @@ import {
 } from '@ui-kitten/components';
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { DetailProduct, ProductCard } from './components';
+import { ProductCard } from './components';
 
 export const HomeScreen = () => {
   const theme = useTheme();
@@ -101,6 +101,7 @@ export const HomeScreen = () => {
                 image={item.image}
                 price={item.price}
                 description={item.description}
+                id={item.id}
               />
             )}
             numColumns={2}
