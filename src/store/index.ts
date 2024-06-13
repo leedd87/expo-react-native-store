@@ -4,6 +4,7 @@ import { categoriesApi } from './features/Categories/categoriesApiSlice';
 import { authApi } from './features/Auth/authApiSlice';
 import productsSlice from './features/Products/productsSlice';
 import authSlice from './features/Auth/authSlice';
+import favoritesSlice from './features/Favorites/favoritesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [categoriesApi.reducerPath]: categoriesApi.reducer,
     authSlice,
     productsSlice,
+    favoritesSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()

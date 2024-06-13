@@ -6,6 +6,13 @@ import { CustomIcon } from '../../../../common/CustomIcon/CustomIcon';
 import { FAB } from '../../../../common/FAB/FAB';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../navigation/MainStackNavigator/MainStackNavigator';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks/hooks';
+import { setFavoritesProducts } from '../../../../store/features/Favorites/favoritesSlice';
+
+interface ProductCardProps extends Product {
+  onPress?: (item: Product) => void;
+  item: Product;
+}
 
 export const ProductCard = ({
   title,
@@ -13,14 +20,18 @@ export const ProductCard = ({
   description,
   image,
   id,
-}: Product) => {
+  onPress,
+  item,
+}: ProductCardProps) => {
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const dispatch = useAppDispatch();
 
   const onPressFavorite = () => {
     setIsFavorite(!isFavorite);
     !isFavorite ? console.log('IS FAVORITE') : console.log('NOT FAVORITE');
+    onPress?.(item);
   };
   return (
     <Layout
