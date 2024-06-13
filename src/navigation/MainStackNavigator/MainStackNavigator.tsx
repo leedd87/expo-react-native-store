@@ -11,7 +11,9 @@ export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Register: undefined;
-  TabNavigator: undefined;
+  TabNavigator: {
+    screen: string;
+  };
   Detail: {
     title?: string;
     price?: string;

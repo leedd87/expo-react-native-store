@@ -75,16 +75,18 @@ export const DetailScreen = () => {
           <Text>{description}</Text>
         </Layout>
       </Layout>
-      <FAB
-        iconName="shopping-cart"
-        onPress={() => {
-          //GOBACK Y DISPATCH A CARRITO
-          navigation.goBack();
-        }}
-        style={{
-          marginBottom: 30,
-        }}
-      />
+      <Layout style={{ gap: 10 }}>
+        <FAB
+          iconName="shopping-cart"
+          onPress={() => {
+            //TODO navigateo to cart Y DISPATCH A CARRITO
+            navigation.navigate('TabNavigator', { screen: 'Cart' });
+          }}
+          style={{
+            marginBottom: 30,
+          }}
+        />
+      </Layout>
     </Layout>
   );
 };
