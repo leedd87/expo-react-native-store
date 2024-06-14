@@ -7,7 +7,7 @@ import { FAB } from '../../../../common/FAB/FAB';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../navigation/MainStackNavigator/MainStackNavigator';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks/hooks';
-import { setFavoritesProducts } from '../../../../store/features/Favorites/favoritesSlice';
+import { addFavoriteProducts } from '../../../../store/features/Favorites/favoritesSlice';
 
 interface ProductCardProps extends Product {
   onPress?: (item: Product) => void;

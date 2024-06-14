@@ -13,7 +13,7 @@ const favoritesSlice = createSlice({
   name: 'favoritesProducts',
   initialState,
   reducers: {
-    setFavoritesProducts: (state, action) => {
+    addFavoriteProduct: (state, action) => {
       const favoriteProduct = { ...action.payload };
 
       state.favoritesProducts?.push(favoriteProduct);
@@ -21,6 +21,6 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const { setFavoritesProducts } = favoritesSlice.actions;
+export const { addFavoriteProduct } = favoritesSlice.actions;
 
 export default favoritesSlice.reducer;

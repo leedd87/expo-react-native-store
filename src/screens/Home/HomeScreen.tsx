@@ -33,7 +33,7 @@ import {
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductCard } from './components';
-import { setFavoritesProducts } from '../../store/features/Favorites/favoritesSlice';
+import { addFavoriteProduct } from '../../store/features/Favorites/favoritesSlice';
 
 export const HomeScreen = () => {
   const theme = useTheme();
@@ -44,12 +44,7 @@ export const HomeScreen = () => {
   );
 
   const onPressSaveFavoriteProduct = (item: Product) => {
-    // const favoriteProduct = {
-    //   id: '12', // Asegúrate de pasar las propiedades correctas de item
-    //   name: 'test',
-    //   // cualquier otra propiedad que necesites
-    // };
-    dispatch(setFavoritesProducts(item));
+    dispatch(addFavoriteProduct(item));
   };
 
   const { currentData: apiAllProducts } = useGetAllProductsQuery();

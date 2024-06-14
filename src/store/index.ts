@@ -5,6 +5,7 @@ import { authApi } from './features/Auth/authApiSlice';
 import productsSlice from './features/Products/productsSlice';
 import authSlice from './features/Auth/authSlice';
 import favoritesSlice from './features/Favorites/favoritesSlice';
+import cartSlice from './features/Cart/cartSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     authSlice,
     productsSlice,
     favoritesSlice,
+    cartSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
