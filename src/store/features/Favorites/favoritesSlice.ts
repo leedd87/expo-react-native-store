@@ -18,6 +18,15 @@ const favoritesSlice = createSlice({
 
       state.favoritesProducts?.push(favoriteProduct);
     },
+    //TODO DOES THIS FUNCTIONS?
+    removeFavoriteProduct: (state, action) => {
+      const favoriteProductId = action.payload;
+      const newFavoritesProducts = state.favoritesProducts?.filter(
+        (product) => product.id !== favoriteProductId
+      );
+
+      state.favoritesProducts = newFavoritesProducts;
+    },
   },
 });
 
