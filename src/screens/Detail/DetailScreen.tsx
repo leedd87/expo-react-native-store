@@ -15,6 +15,8 @@ import { RootStackParamList } from '../../navigation/MainStackNavigator/MainStac
 import { ActivityIndicator, Image } from 'react-native';
 import { DetailProduct } from './components';
 import { useGetSingleProductQuery } from '../../store/features/Products/productsApiSlice';
+import { addCartProduct } from '../../store/features/Cart/cartSlice';
+import { Product } from '../../store/features/Products/types';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -26,6 +28,11 @@ export const DetailScreen = () => {
   //Al hacer dispatch enviar singleProduct => ya que tiene toda la info del producto
   const { currentData: singleProduct, isLoading } =
     useGetSingleProductQuery(id);
+
+  const onPressAddCartProduct = () => {
+    dispatch(addCartProduct(singleProduct));
+    navigation.navigate('TabNavigator', { screen: 'Cart' });
+  };
 
   return (
     <Layout
@@ -74,10 +81,11 @@ export const DetailScreen = () => {
           <Layout style={{ gap: 10 }}>
             <FAB
               iconName="shopping-cart"
-              onPress={() => {
-                //TODO navigateo to cart Y DISPATCH A CARRITO
-                navigation.navigate('TabNavigator', { screen: 'Cart' });
-              }}
+              // onPress={() => {
+              //   //TODO navigateo to cart Y DISPATCH A CARRITO
+              //   navigation.navigate('TabNavigator', { screen: 'Cart' });
+              // }}
+              onPress={onPressAddCartProduct}
               style={{
                 marginBottom: 30,
               }}

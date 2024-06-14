@@ -1,69 +1,16 @@
 import React from 'react';
-import { Layout, Text, Button, List } from '@ui-kitten/components';
+import { Layout, Text, List } from '@ui-kitten/components';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
-import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
-import { FlatList } from 'react-native-gesture-handler';
-import { ProductCard } from '../Home/components';
-import { Image } from 'react-native';
-import { Product } from '../../store/features/Products/types';
-import { FAB } from '../../common/FAB/FAB';
+
+import { FavoriteProduct } from './components';
 
 export const FavoritesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const favoriteProducst = useAppSelector(
     (state) => state.favoritesSlice.favoritesProducts
-  );
-
-  console.log(
-    '🚀 ~ file: FavoritesScreen.tsx:16 ~ FavoritesScreen ~ favoriteProducst:',
-    favoriteProducst?.length
-  );
-
-  const FavoriteProduct = ({
-    title,
-    price,
-
-    image,
-    id,
-  }: Product) => (
-    <Layout
-      key={id}
-      style={{
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        borderWidth: 1,
-      }}
-    >
-      <Image
-        source={{ uri: image }}
-        style={{
-          height: 200,
-          width: '50%',
-          resizeMode: 'contain',
-          margin: 5,
-        }}
-      />
-      <Layout style={{ flex: 1, paddingHorizontal: 15, gap: 30, padding: 15 }}>
-        <Text category="h6">{title}</Text>
-
-        <Text category="h5">{`$ ${price}`}</Text>
-      </Layout>
-      <FAB
-        iconName="trash-outline"
-        onPress={() => {}}
-        style={{
-          position: 'absolute',
-          right: 10,
-          bottom: 10,
-          width: 20,
-          height: 20,
-        }}
-      />
-    </Layout>
   );
 
   return (
