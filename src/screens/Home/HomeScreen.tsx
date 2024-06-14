@@ -43,6 +43,8 @@ export const HomeScreen = () => {
     (state) => state.productsSlice.allProducts
   );
 
+  console.log(allProducts?.[2]);
+
   const onPressSaveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
   };
@@ -109,6 +111,7 @@ export const HomeScreen = () => {
                 id={item.id}
                 onPress={() => onPressSaveFavoriteProduct(item)}
                 item={item}
+                favorite={item.favorite}
               />
             )}
             numColumns={2}

@@ -7,7 +7,6 @@ import { FAB } from '../../../../common/FAB/FAB';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../navigation/MainStackNavigator/MainStackNavigator';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks/hooks';
-import { addFavoriteProducts } from '../../../../store/features/Favorites/favoritesSlice';
 
 interface ProductCardProps extends Product {
   onPress?: (item: Product) => void;
@@ -22,9 +21,10 @@ export const ProductCard = ({
   id,
   onPress,
   item,
+  favorite,
 }: ProductCardProps) => {
   const theme = useTheme();
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(favorite);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
 

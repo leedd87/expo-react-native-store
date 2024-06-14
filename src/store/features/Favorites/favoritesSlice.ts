@@ -14,7 +14,7 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavoriteProduct: (state, action) => {
-      const favoriteProduct = { ...action.payload };
+      const favoriteProduct = { ...action.payload, favorite: true };
 
       state.favoritesProducts?.push(favoriteProduct);
     },
