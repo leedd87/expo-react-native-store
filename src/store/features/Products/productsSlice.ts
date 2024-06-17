@@ -13,9 +13,6 @@ export const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    // setAllProducts: (state, action) => {
-    //   state.allProducts = action.payload;
-    // },
     setAllProducts: (state, action) => {
       state.allProducts = action.payload.map((producto: Product) => ({
         ...producto,
