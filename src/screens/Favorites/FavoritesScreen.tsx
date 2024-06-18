@@ -13,6 +13,10 @@ export const FavoritesScreen = () => {
     (state) => state.favoritesSlice.favoritesProducts
   );
 
+  const removeFavorite = () => {
+    console.log('REMOVE FAVORITE');
+  };
+
   return (
     <Layout
       style={{

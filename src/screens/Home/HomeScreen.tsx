@@ -33,20 +33,38 @@ import {
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductCard } from './components';
-import { addFavoriteProduct } from '../../store/features/Favorites/favoritesSlice';
+import {
+  addFavoriteProduct,
+  removeFavoriteProduct,
+} from '../../store/features/Favorites/favoritesSlice';
 
 export const HomeScreen = () => {
   const theme = useTheme();
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const favoritesProducts = useAppSelector(
+    (state) => state.favoritesSlice.favoritesProducts
+  );
+
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
   );
 
-  console.log(allProducts?.[2]);
-
+  const removeFavorite = (id: string) => {
+    const selectedProduct = favoritesProducts?.find(
+      (product) => product.id === id
+    );
+    //TODO aca hacer el dispatch de selectedProduct? o el selectedProduct es el dispatch
+    dispatch(removeFavoriteProduct(id));
+  };
   const onPressSaveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
+    const selectedProduct = favoritesProducts?.find(
+      (product) => product.id === item.id
+    );
+    if (selectedProduct?.favorite) {
+      removeFavorite(selectedProduct?.id);
+    }
   };
 
   const { currentData: apiAllProducts } = useGetAllProductsQuery();

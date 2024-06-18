@@ -21,6 +21,10 @@ const favoritesSlice = createSlice({
     //TODO DOES THIS FUNCTIONS?
     removeFavoriteProduct: (state, action) => {
       const favoriteProductId = action.payload;
+      console.log(
+        '🚀 ~ file: favoritesSlice.ts:24 ~ favoriteProductId:',
+        favoriteProductId
+      );
       const newFavoritesProducts = state.favoritesProducts?.filter(
         (product) => product.id !== favoriteProductId
       );
@@ -30,6 +34,7 @@ const favoritesSlice = createSlice({
   },
 });
 
-export const { addFavoriteProduct } = favoritesSlice.actions;
+export const { addFavoriteProduct, removeFavoriteProduct } =
+  favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
