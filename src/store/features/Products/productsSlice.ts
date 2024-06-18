@@ -19,9 +19,21 @@ export const productsSlice = createSlice({
         favorite: false,
       }));
     },
+    toggleFavoriteProduct: (state, action: PayloadAction<string>) => {
+      const productId = action.payload;
+      const product = state.allProducts?.find((p) => p.id === productId);
+      if (product) {
+        product.favorite = !product.favorite;
+        if (product.favorite) {
+          console.log('ES FAVORITO');
+        } else {
+          console.log('NO ES FAVORITo');
+        }
+      }
+    },
   },
 });
 
-export const { setAllProducts } = productsSlice.actions;
+export const { setAllProducts, toggleFavoriteProduct } = productsSlice.actions;
 
 export default productsSlice.reducer;

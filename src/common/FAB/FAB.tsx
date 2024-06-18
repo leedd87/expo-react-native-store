@@ -2,6 +2,7 @@ import { View, Text, StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
 import { Button } from '@ui-kitten/components';
 import { CustomIcon } from '../CustomIcon/CustomIcon';
+import { Product } from '../../store/features/Products/types';
 
 interface Props {
   iconName: string;

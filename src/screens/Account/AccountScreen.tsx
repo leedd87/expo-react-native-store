@@ -11,7 +11,6 @@ export const AccountScreen = () => {
 
   const cerrarSesion = () => {
     dispatch(logOut());
-    console.log(dispatch(logOut()));
   };
   return (
     <Layout

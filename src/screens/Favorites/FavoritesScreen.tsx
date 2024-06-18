@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 
 import { FavoriteProduct } from './components';
+import { removeFavoriteProduct } from '../../store/features/Favorites/favoritesSlice';
+import { Product } from '../../store/features/Products/types';
 
 export const FavoritesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -12,9 +14,17 @@ export const FavoritesScreen = () => {
   const favoriteProducst = useAppSelector(
     (state) => state.favoritesSlice.favoritesProducts
   );
+  const allProducts = useAppSelector(
+    (state) => state.productsSlice.allProducts
+  );
 
-  const removeFavorite = () => {
-    console.log('REMOVE FAVORITE');
+  const removeFavorite = (item: Product) => {
+    const selectedProduct = favoriteProducst?.find(
+      (product) => product.id === item.id
+    );
+    if (selectedProduct?.favorite) {
+      dispatch(removeFavoriteProduct(selectedProduct?.id));
+    }
   };
 
   return (
@@ -37,6 +47,8 @@ export const FavoritesScreen = () => {
                 image={item.image}
                 title={item.title}
                 price={item.price}
+                onPress={() => removeFavorite(item)}
+                item={item}
               />
             )}
             ListFooterComponent={() => <Layout style={{ height: 100 }} />}

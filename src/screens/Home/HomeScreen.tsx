@@ -19,17 +19,12 @@ import { useGetAllCategoriesQuery } from '../../store/features/Categories/catego
 import { Product } from '../../store/features/Products/types';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
-import { setAllProducts } from '../../store/features/Products/productsSlice';
-
-import { logOut } from '../../store/features/Auth/authSlice';
 import {
-  Button,
-  Input,
-  Layout,
-  List,
-  Text,
-  useTheme,
-} from '@ui-kitten/components';
+  setAllProducts,
+  toggleFavoriteProduct,
+} from '../../store/features/Products/productsSlice';
+
+import { Button, Layout, List, Text } from '@ui-kitten/components';
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductCard } from './components';
@@ -39,10 +34,9 @@ import {
 } from '../../store/features/Favorites/favoritesSlice';
 
 export const HomeScreen = () => {
-  const theme = useTheme();
-  const { top, bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
-  const favoritesProducts = useAppSelector(
+  const favoriteProducts = useAppSelector(
     (state) => state.favoritesSlice.favoritesProducts
   );
 
@@ -50,20 +44,14 @@ export const HomeScreen = () => {
     (state) => state.productsSlice.allProducts
   );
 
-  const removeFavorite = (id: string) => {
-    const selectedProduct = favoritesProducts?.find(
-      (product) => product.id === id
-    );
-    //TODO aca hacer el dispatch de selectedProduct? o el selectedProduct es el dispatch
-    dispatch(removeFavoriteProduct(id));
-  };
-  const onPressSaveFavoriteProduct = (item: Product) => {
+  const onPressSaveRemoveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
-    const selectedProduct = favoritesProducts?.find(
+    const selectedProduct = favoriteProducts?.find(
       (product) => product.id === item.id
     );
     if (selectedProduct?.favorite) {
-      removeFavorite(selectedProduct?.id);
+      //dispatch(removeFavoriteProduct(selectedProduct?.id));
+      dispatch(toggleFavoriteProduct(selectedProduct?.id));
     }
   };
 
@@ -127,7 +115,7 @@ export const HomeScreen = () => {
                 price={item.price}
                 description={item.description}
                 id={item.id}
-                onPress={() => onPressSaveFavoriteProduct(item)}
+                onPress={() => onPressSaveRemoveFavoriteProduct(item)}
                 item={item}
                 favorite={item.favorite}
               />

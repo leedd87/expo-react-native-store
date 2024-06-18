@@ -25,12 +25,12 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const theme = useTheme();
   const [isFavorite, setIsFavorite] = useState(favorite);
+
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const dispatch = useAppDispatch();
 
   const onPressFavorite = () => {
     setIsFavorite(!isFavorite);
-    !isFavorite ? console.log('IS FAVORITE') : console.log('NOT FAVORITE');
+
     onPress?.(item);
   };
   return (
