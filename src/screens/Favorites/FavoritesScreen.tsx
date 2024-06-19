@@ -7,15 +7,13 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import { FavoriteProduct } from './components';
 import { removeFavoriteProduct } from '../../store/features/Favorites/favoritesSlice';
 import { Product } from '../../store/features/Products/types';
+import { toggleFavoriteProduct } from '../../store/features/Products/productsSlice';
 
 export const FavoritesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const favoriteProducst = useAppSelector(
     (state) => state.favoritesSlice.favoritesProducts
-  );
-  const allProducts = useAppSelector(
-    (state) => state.productsSlice.allProducts
   );
 
   const removeFavorite = (item: Product) => {
@@ -24,6 +22,7 @@ export const FavoritesScreen = () => {
     );
     if (selectedProduct?.favorite) {
       dispatch(removeFavoriteProduct(selectedProduct?.id));
+      dispatch(toggleFavoriteProduct(selectedProduct?.id));
     }
   };
 

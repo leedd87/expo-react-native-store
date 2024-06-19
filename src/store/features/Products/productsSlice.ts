@@ -22,14 +22,7 @@ export const productsSlice = createSlice({
     toggleFavoriteProduct: (state, action: PayloadAction<string>) => {
       const productId = action.payload;
       const product = state.allProducts?.find((p) => p.id === productId);
-      if (product) {
-        product.favorite = !product.favorite;
-        if (product.favorite) {
-          console.log('ES FAVORITO');
-        } else {
-          console.log('NO ES FAVORITo');
-        }
-      }
+      product!.favorite = !product?.favorite;
     },
   },
 });

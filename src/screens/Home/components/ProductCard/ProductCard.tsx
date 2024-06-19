@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Layout, Text, useTheme } from '@ui-kitten/components';
 import { Product } from '../../../../store/features/Products/types';
 import { Image } from 'react-native';
@@ -7,6 +7,7 @@ import { FAB } from '../../../../common/FAB/FAB';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../navigation/MainStackNavigator/MainStackNavigator';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks/hooks';
+import { toggleFavoriteProduct } from '../../../../store/features/Products/productsSlice';
 
 interface ProductCardProps extends Product {
   onPress?: (item: Product) => void;
@@ -21,18 +22,16 @@ export const ProductCard = ({
   id,
   onPress,
   item,
-  favorite,
 }: ProductCardProps) => {
   const theme = useTheme();
-  const [isFavorite, setIsFavorite] = useState(favorite);
-
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const onPressFavorite = () => {
-    setIsFavorite(!isFavorite);
-
+    dispatch(toggleFavoriteProduct(item?.id));
     onPress?.(item);
   };
+
   return (
     <Layout
       style={{
@@ -60,8 +59,8 @@ export const ProductCard = ({
           top: 10,
           height: 10,
           width: 10,
-          backgroundColor: isFavorite ? 'red' : theme['color-primary-400'],
-          borderColor: isFavorite ? 'red' : theme['color-primary-400'],
+          backgroundColor: item.favorite ? 'red' : theme['color-primary-400'],
+          borderColor: item.favorite ? 'red' : theme['color-primary-400'],
         }}
       />
       <Layout style={{ flex: 1, padding: 10 }}>

@@ -50,8 +50,7 @@ export const HomeScreen = () => {
       (product) => product.id === item.id
     );
     if (selectedProduct?.favorite) {
-      //dispatch(removeFavoriteProduct(selectedProduct?.id));
-      dispatch(toggleFavoriteProduct(selectedProduct?.id));
+      dispatch(removeFavoriteProduct(selectedProduct?.id));
     }
   };
 
@@ -117,7 +116,6 @@ export const HomeScreen = () => {
                 id={item.id}
                 onPress={() => onPressSaveRemoveFavoriteProduct(item)}
                 item={item}
-                favorite={item.favorite}
               />
             )}
             numColumns={2}
