@@ -17,13 +17,8 @@ export const FavoritesScreen = () => {
   );
 
   const removeFavorite = (item: Product) => {
-    const selectedProduct = favoriteProducst?.find(
-      (product) => product.id === item.id
-    );
-    if (selectedProduct?.favorite) {
-      dispatch(removeFavoriteProduct(selectedProduct?.id));
-      dispatch(toggleFavoriteProduct(selectedProduct?.id));
-    }
+    dispatch(removeFavoriteProduct(item?.id));
+    dispatch(toggleFavoriteProduct(item?.id));
   };
 
   return (
