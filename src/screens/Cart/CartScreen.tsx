@@ -4,11 +4,16 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import CartProduct from './components/CartProduct/CartProduct';
+import { removeCartProduct } from '../../store/features/Cart/cartSlice';
 
 export const CartScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const cartProducts = useAppSelector((state) => state.cartSlice.cartProducts);
+
+  const onPressRemoveCartProduct = (id: string) => {
+    dispatch(removeCartProduct(id));
+  };
 
   return (
     <Layout
@@ -30,7 +35,9 @@ export const CartScreen = () => {
                 image={item.image}
                 title={item.title}
                 price={item.price}
-                onPress={() => {}}
+                onPress={() => {
+                  onPressRemoveCartProduct(item.id);
+                }}
               />
             )}
             ListFooterComponent={() => <Layout style={{ height: 100 }} />}
