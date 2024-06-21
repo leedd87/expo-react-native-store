@@ -23,7 +23,7 @@ export const AccountScreen = () => {
       <Layout style={{ paddingTop: 30 * 0.35 }}>
         <Text category="h1">Account</Text>
       </Layout>
-      <Layout style={{ marginTop: 20, gap: 20 }}>
+      <Layout style={{ marginTop: 20 }}>
         <Button
           onPress={cerrarSesion}
           accessoryRight={<CustomIcon name="arrow-forward-outline" white />}
