@@ -24,7 +24,7 @@ import {
   toggleFavoriteProduct,
 } from '../../store/features/Products/productsSlice';
 
-import { Button, Layout, List, Text } from '@ui-kitten/components';
+import { Button, Layout, List, Text, useTheme } from '@ui-kitten/components';
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ProductCard } from './components';
@@ -34,6 +34,7 @@ import {
 } from '../../store/features/Favorites/favoritesSlice';
 
 export const HomeScreen = () => {
+  const theme = useTheme();
   const { top } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const favoriteProducts = useAppSelector(
@@ -87,6 +88,23 @@ export const HomeScreen = () => {
     deleteProduct('1');
   };
 
+  //TESTING
+  const categorias = [
+    { category: 'categoria 1', id: '1' },
+    {
+      category: 'categoria 2',
+      id: '2',
+    },
+    {
+      category: 'categoria 3',
+      id: '3',
+    },
+    {
+      category: 'categoria 4',
+      id: '4',
+    },
+  ];
+
   return (
     <Layout
       style={{
@@ -102,6 +120,22 @@ export const HomeScreen = () => {
         >
           Get Products
         </Button>
+      </Layout>
+
+      <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+        <List
+          style={{
+            backgroundColor: theme['color-basic-800'],
+          }}
+          data={categorias}
+          renderItem={({ item }) => (
+            <Layout style={{ marginEnd: 5 }}>
+              <Button>{item.category}</Button>
+            </Layout>
+          )}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+        />
       </Layout>
       <Layout style={{ marginTop: 20, gap: 20 }}>
         {allProducts ? (
