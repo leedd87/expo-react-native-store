@@ -20,8 +20,8 @@ import { Product } from '../../store/features/Products/types';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import {
+  filterByCategory,
   setAllProducts,
-  toggleFavoriteProduct,
 } from '../../store/features/Products/productsSlice';
 
 import { Button, Layout, List, Text, useTheme } from '@ui-kitten/components';
@@ -44,6 +44,7 @@ export const HomeScreen = () => {
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
   );
+  console.log(allProducts?.length);
 
   const onPressSaveRemoveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
@@ -58,6 +59,11 @@ export const HomeScreen = () => {
   const { currentData: apiAllProducts } = useGetAllProductsQuery();
   const { currentData: allCategories } = useGetAllCategoriesQuery();
   const [hasSameId, setHasSameId] = useState('');
+  const { currentData: apiAllCategories } = useGetAllCategoriesQuery();
+
+  const getProductsByCategory = (item: string) => {
+    dispatch(filterByCategory(item));
+  };
 
   const body = {
     title: 'test product',
@@ -88,23 +94,6 @@ export const HomeScreen = () => {
     deleteProduct('1');
   };
 
-  //TESTING
-  const categorias = [
-    { category: 'categoria 1', id: '1' },
-    {
-      category: 'categoria 2',
-      id: '2',
-    },
-    {
-      category: 'categoria 3',
-      id: '3',
-    },
-    {
-      category: 'categoria 4',
-      id: '4',
-    },
-  ];
-
   return (
     <Layout
       style={{
@@ -127,13 +116,15 @@ export const HomeScreen = () => {
           style={{
             backgroundColor: theme['color-basic-800'],
           }}
-          data={categorias}
+          data={apiAllCategories}
           renderItem={({ item }) => (
             <Layout style={{ marginEnd: 5 }}>
-              <Button>{item.category}</Button>
+              <Button onPress={() => getProductsByCategory(item)}>
+                {item}
+              </Button>
             </Layout>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item}
           horizontal={true}
         />
       </Layout>

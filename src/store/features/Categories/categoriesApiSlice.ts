@@ -7,7 +7,11 @@ export const categoriesApi = createApi({
     getAllCategories: builder.query<[], void>({
       query: () => `/products/categories`,
     }),
+    getSingleCategory: builder.query<[], string>({
+      query: (category) => `/products/category/${category}`,
+    }),
   }),
 });
 
-export const { useGetAllCategoriesQuery } = categoriesApi;
+export const { useGetAllCategoriesQuery, useGetSingleCategoryQuery } =
+  categoriesApi;
