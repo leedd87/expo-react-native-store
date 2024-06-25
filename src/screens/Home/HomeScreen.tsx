@@ -27,7 +27,7 @@ import {
 import { Button, Layout, List, Text, useTheme } from '@ui-kitten/components';
 import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ProductCard } from './components';
+import { CategoryBtn, ProductCard } from './components';
 import {
   addFavoriteProduct,
   removeFavoriteProduct,
@@ -40,11 +40,15 @@ export const HomeScreen = () => {
   const favoriteProducts = useAppSelector(
     (state) => state.favoritesSlice.favoritesProducts
   );
-
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
   );
-  console.log(allProducts?.length);
+
+  const { currentData: apiAllProducts } = useGetAllProductsQuery();
+  const { currentData: apiAllCategories } = useGetAllCategoriesQuery();
+  const [addNewProduct, addNewProductResults] = useAddNewProductMutation();
+  const [deleteProduct, { isLoading, data, status, originalArgs }] =
+    useDeleteProductMutation();
 
   const onPressSaveRemoveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
@@ -56,42 +60,17 @@ export const HomeScreen = () => {
     }
   };
 
-  const { currentData: apiAllProducts } = useGetAllProductsQuery();
-  const { currentData: allCategories } = useGetAllCategoriesQuery();
-  const [hasSameId, setHasSameId] = useState('');
-  const { currentData: apiAllCategories } = useGetAllCategoriesQuery();
+  const getProductsByCategory = (category: string) => {
+    if (category === 'all') {
+      dispatch(setAllProducts(apiAllProducts));
 
-  const getProductsByCategory = (item: string) => {
-    dispatch(filterByCategory(item));
+      return;
+    }
+    dispatch(filterByCategory(category));
   };
-
-  const body = {
-    title: 'test product',
-    price: '13.5',
-    description: 'lorem ipsum set',
-    image: 'https://i.pravatar.cc',
-    category: 'electronic',
-  };
-
-  const [addNewProduct, addNewProductResults] = useAddNewProductMutation();
-  const [deleteProduct, { isLoading, data, status, originalArgs }] =
-    useDeleteProductMutation();
 
   const getProducts = () => {
     dispatch(setAllProducts(apiAllProducts));
-  };
-
-  const getSingleProduct = (id: string) => {
-    setHasSameId(id);
-  };
-
-  const crearProducto = (body: Partial<Product>) => {
-    addNewProduct(body);
-    console.log(body);
-  };
-
-  const borrarProducto = () => {
-    deleteProduct('1');
   };
 
   return (
@@ -119,9 +98,10 @@ export const HomeScreen = () => {
           data={apiAllCategories}
           renderItem={({ item }) => (
             <Layout style={{ marginEnd: 5 }}>
-              <Button onPress={() => getProductsByCategory(item)}>
-                {item}
-              </Button>
+              <CategoryBtn
+                onPress={() => getProductsByCategory(item)}
+                item={item}
+              />
             </Layout>
           )}
           keyExtractor={(item) => item}

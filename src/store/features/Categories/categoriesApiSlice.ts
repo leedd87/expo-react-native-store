@@ -4,8 +4,9 @@ export const categoriesApi = createApi({
   reducerPath: 'categoriesApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://fakestoreapi.com' }),
   endpoints: (builder) => ({
-    getAllCategories: builder.query<[], void>({
+    getAllCategories: builder.query<string[], void>({
       query: () => `/products/categories`,
+      transformResponse: (response: string[]) => ['all', ...response],
     }),
     getSingleCategory: builder.query<[], string>({
       query: (category) => `/products/category/${category}`,
