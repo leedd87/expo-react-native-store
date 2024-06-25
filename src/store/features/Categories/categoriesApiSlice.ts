@@ -6,7 +6,6 @@ export const categoriesApi = createApi({
   endpoints: (builder) => ({
     getAllCategories: builder.query<string[], void>({
       query: () => `/products/categories`,
-      transformResponse: (response: string[]) => ['all', ...response],
     }),
     getSingleCategory: builder.query<[], string>({
       query: (category) => `/products/category/${category}`,

@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FlatList,
-  StatusBar,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
-  RefreshControl,
-} from 'react-native';
+import { StatusBar, StyleSheet } from 'react-native';
 import {
   useAddNewProductMutation,
   useDeleteProductMutation,
   useGetAllProductsQuery,
-  useGetSingleProductQuery,
 } from '../../store/features/Products/productsApiSlice';
 import { useGetAllCategoriesQuery } from '../../store/features/Categories/categoriesApiSlice';
 import { Product } from '../../store/features/Products/types';
@@ -62,16 +52,6 @@ export const HomeScreen = () => {
     }
   };
 
-  const getProductsByCategory = (category: string) => {
-    if (category === 'all') {
-      dispatch(setAllProducts(apiAllProducts));
-      return;
-    }
-
-    dispatch(setAllProducts(apiAllProducts));
-    dispatch(filterByCategory(category));
-  };
-
   const getProducts = () => {
     dispatch(setAllProducts(apiAllProducts));
   };
@@ -82,7 +62,8 @@ export const HomeScreen = () => {
       dispatch(setAllProducts(apiAllProducts));
     } else {
       setSelectedCategory(category);
-      getProductsByCategory(category);
+      dispatch(setAllProducts(apiAllProducts));
+      dispatch(filterByCategory(category));
     }
   };
 
@@ -112,7 +93,6 @@ export const HomeScreen = () => {
           renderItem={({ item }) => (
             <Layout style={{ marginEnd: 5 }}>
               <CategoryBtn
-                // onPress={() => getProductsByCategory(item)}
                 onPress={handleCategoryPress}
                 item={item}
                 isSelected={selectedCategory === item}
