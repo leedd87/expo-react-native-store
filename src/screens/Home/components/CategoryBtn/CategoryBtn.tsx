@@ -4,20 +4,23 @@ import { useState } from 'react';
 interface CategoryBtnProps {
   item: string;
   onPress: (category: string) => void;
+  isSelected: boolean;
 }
 
-export const CategoryBtn = ({ item, onPress }: CategoryBtnProps) => {
+export const CategoryBtn = ({
+  item,
+  onPress,
+  isSelected,
+}: CategoryBtnProps) => {
   const theme = useTheme();
-  const [selectedCategory, setSelectedCategory] = useState(false);
   const onPressBtn = (item: string) => {
     onPress(item);
-    setSelectedCategory(!selectedCategory);
   };
   return (
     <Button
       onPress={() => onPressBtn(item)}
       style={{
-        backgroundColor: selectedCategory
+        backgroundColor: isSelected
           ? theme['color-primary-600']
           : theme['color-primary-500'],
       }}

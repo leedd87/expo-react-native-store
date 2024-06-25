@@ -44,6 +44,8 @@ export const HomeScreen = () => {
     (state) => state.productsSlice.allProducts
   );
 
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const { currentData: apiAllProducts } = useGetAllProductsQuery();
   const { currentData: apiAllCategories } = useGetAllCategoriesQuery();
   const [addNewProduct, addNewProductResults] = useAddNewProductMutation();
@@ -63,14 +65,25 @@ export const HomeScreen = () => {
   const getProductsByCategory = (category: string) => {
     if (category === 'all') {
       dispatch(setAllProducts(apiAllProducts));
-
       return;
     }
+
+    dispatch(setAllProducts(apiAllProducts));
     dispatch(filterByCategory(category));
   };
 
   const getProducts = () => {
     dispatch(setAllProducts(apiAllProducts));
+  };
+
+  const handleCategoryPress = (category: string) => {
+    if (selectedCategory === category) {
+      setSelectedCategory(null);
+      dispatch(setAllProducts(apiAllProducts));
+    } else {
+      setSelectedCategory(category);
+      getProductsByCategory(category);
+    }
   };
 
   return (
@@ -99,8 +112,10 @@ export const HomeScreen = () => {
           renderItem={({ item }) => (
             <Layout style={{ marginEnd: 5 }}>
               <CategoryBtn
-                onPress={() => getProductsByCategory(item)}
+                // onPress={() => getProductsByCategory(item)}
+                onPress={handleCategoryPress}
                 item={item}
+                isSelected={selectedCategory === item}
               />
             </Layout>
           )}

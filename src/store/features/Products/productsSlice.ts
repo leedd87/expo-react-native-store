@@ -24,16 +24,14 @@ export const productsSlice = createSlice({
       const product = state.allProducts?.find((p) => p.id === productId);
       product!.favorite = !product?.favorite;
     },
+
     filterByCategory: (state, action: PayloadAction<string>) => {
       const category = action.payload;
 
       const productsByCategory = state.allProducts?.filter(
         (product) => product.category === category
       );
-      console.log(
-        '🚀 ~ file: productsSlice.ts:31 ~ productsByCategory:',
-        productsByCategory?.length
-      );
+
       state.allProducts = productsByCategory;
     },
   },
