@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native';
+import { Image } from 'react-native';
 import React from 'react';
 import { Layout, Text } from '@ui-kitten/components';
 
@@ -15,15 +15,12 @@ export const DetailProduct = ({
   title,
   price,
   description,
-  //TESTING
   stock,
 }: DetailProductProps) => {
-  console.log('🚀 ~ file: DetailProduct.tsx:21 ~ stock:', stock);
   return (
     <Layout
       style={{
-        gap: 10,
-
+        gap: 20,
         justifyContent: 'space-between',
       }}
     >
@@ -46,9 +43,6 @@ export const DetailProduct = ({
       <Text category="h6">{title}</Text>
       <Text category="h2">{`$ ${price}`}</Text>
       <Text>{description}</Text>
-      <Layout>
-        <Text category="h6">{stock}</Text>
-      </Layout>
     </Layout>
   );
 };

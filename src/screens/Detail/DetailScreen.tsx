@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Layout, Text, Button } from '@ui-kitten/components';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch } from '../../store/hooks/hooks';
-import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { FAB } from '../../common/FAB/FAB';
 import {
   NavigationProp,
@@ -12,11 +11,10 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/MainStackNavigator/MainStackNavigator';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { DetailProduct } from './components';
 import { useGetSingleProductQuery } from '../../store/features/Products/productsApiSlice';
 import { addCartProduct } from '../../store/features/Cart/cartSlice';
-import { Product } from '../../store/features/Products/types';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -28,13 +26,18 @@ export const DetailScreen = () => {
   //Al hacer dispatch enviar singleProduct => ya que tiene toda la info del producto
   const { currentData: singleProduct, isLoading } =
     useGetSingleProductQuery(id);
-  console.log(
-    '🚀 ~ file: DetailScreen.tsx:30 ~ DetailScreen ~ singleProduct:',
-    singleProduct
-  );
+
+  const [count, setCount] = useState(0);
+  const addStock = () => {
+    setCount(count + 1);
+  };
+
+  const removeStock = () => {
+    setCount(count - 1);
+  };
 
   const onPressAddCartProduct = () => {
-    dispatch(addCartProduct(singleProduct));
+    dispatch(addCartProduct({ ...singleProduct, stock: 2 }));
     navigation.navigate('TabNavigator', { screen: 'Cart' });
   };
 
@@ -82,6 +85,22 @@ export const DetailScreen = () => {
               price={singleProduct?.price}
               stock={singleProduct?.stock}
             />
+            <Layout
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                gap: 10,
+              }}
+            >
+              <Button onPress={removeStock}>
+                <Text>-</Text>
+              </Button>
+              <Text category="h4">{count}</Text>
+              <Button onPress={addStock} disabled={true}>
+                <Text>+</Text>
+              </Button>
+            </Layout>
           </Layout>
           <Layout style={{ gap: 10 }}>
             <FAB

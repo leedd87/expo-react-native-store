@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+
 import {
   useAddNewProductMutation,
   useDeleteProductMutation,
@@ -32,10 +32,6 @@ export const HomeScreen = () => {
   );
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
-  );
-  console.log(
-    '🚀 ~ file: HomeScreen.tsx:48 ~ HomeScreen ~ allProducts:',
-    typeof allProducts?.[0].stock
   );
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -133,19 +129,3 @@ export const HomeScreen = () => {
     </Layout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-});

@@ -5,7 +5,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import CartProduct from './components/CartProduct/CartProduct';
 import { removeCartProduct } from '../../store/features/Cart/cartSlice';
-import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 
 export const CartScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
