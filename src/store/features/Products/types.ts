@@ -6,4 +6,5 @@ export interface Product {
   description?: string;
   image?: string;
   favorite?: boolean;
+  stock?: number;
 }

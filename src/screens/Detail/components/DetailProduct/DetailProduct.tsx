@@ -7,6 +7,7 @@ interface DetailProductProps {
   title?: string;
   price?: string;
   description?: string;
+  stock?: number;
 }
 
 export const DetailProduct = ({
@@ -14,7 +15,10 @@ export const DetailProduct = ({
   title,
   price,
   description,
+  //TESTING
+  stock,
 }: DetailProductProps) => {
+  console.log('🚀 ~ file: DetailProduct.tsx:21 ~ stock:', stock);
   return (
     <Layout
       style={{
@@ -42,6 +46,9 @@ export const DetailProduct = ({
       <Text category="h6">{title}</Text>
       <Text category="h2">{`$ ${price}`}</Text>
       <Text>{description}</Text>
+      <Layout>
+        <Text category="h6">{stock}</Text>
+      </Layout>
     </Layout>
   );
 };

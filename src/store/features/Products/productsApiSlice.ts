@@ -10,6 +10,9 @@ export const productsApi = createApi({
     }),
     getSingleProduct: builder.query<Product, string>({
       query: (id) => `/products/${id}`,
+      transformResponse: (response: Product) => {
+        return { ...response, stock: 5 };
+      },
     }),
     addNewProduct: builder.mutation<Product, Partial<Product>>({
       query: ({ title, price, description, image, category }) => ({

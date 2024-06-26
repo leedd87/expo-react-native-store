@@ -33,6 +33,10 @@ export const HomeScreen = () => {
   const allProducts = useAppSelector(
     (state) => state.productsSlice.allProducts
   );
+  console.log(
+    '🚀 ~ file: HomeScreen.tsx:48 ~ HomeScreen ~ allProducts:',
+    typeof allProducts?.[0].stock
+  );
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 

@@ -17,6 +17,7 @@ export const productsSlice = createSlice({
       state.allProducts = action.payload.map((producto: Product) => ({
         ...producto,
         favorite: false,
+        stock: 5,
       }));
     },
     toggleFavoriteProduct: (state, action: PayloadAction<string>) => {

@@ -28,6 +28,10 @@ export const DetailScreen = () => {
   //Al hacer dispatch enviar singleProduct => ya que tiene toda la info del producto
   const { currentData: singleProduct, isLoading } =
     useGetSingleProductQuery(id);
+  console.log(
+    '🚀 ~ file: DetailScreen.tsx:30 ~ DetailScreen ~ singleProduct:',
+    singleProduct
+  );
 
   const onPressAddCartProduct = () => {
     dispatch(addCartProduct(singleProduct));
@@ -76,15 +80,12 @@ export const DetailScreen = () => {
               description={singleProduct?.description}
               image={singleProduct?.image}
               price={singleProduct?.price}
+              stock={singleProduct?.stock}
             />
           </Layout>
           <Layout style={{ gap: 10 }}>
             <FAB
               iconName="shopping-cart"
-              // onPress={() => {
-              //   //TODO navigateo to cart Y DISPATCH A CARRITO
-              //   navigation.navigate('TabNavigator', { screen: 'Cart' });
-              // }}
               onPress={onPressAddCartProduct}
               style={{
                 marginBottom: 30,
