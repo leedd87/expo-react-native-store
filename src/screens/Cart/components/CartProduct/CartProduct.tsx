@@ -6,6 +6,7 @@ import { FAB } from '../../../../common/FAB/FAB';
 
 interface CartProductProps extends Product {
   onPress: () => void;
+  quantity?: string;
 }
 
 const CartProduct = ({
@@ -14,6 +15,7 @@ const CartProduct = ({
   image,
   id,
   onPress,
+  quantity,
 }: CartProductProps) => (
   <Layout
     key={id}
@@ -36,6 +38,16 @@ const CartProduct = ({
     <Layout style={{ flex: 1, paddingHorizontal: 15, padding: 15, gap: 30 }}>
       <Text category="s1">{title}</Text>
       <Text category="h5">{`$ ${price}`}</Text>
+      <Layout
+        style={{
+          backgroundColor: '#FE9000',
+          alignSelf: 'flex-start',
+          padding: 5,
+          borderRadius: 5,
+        }}
+      >
+        <Text category="h6">{`${quantity} units`}</Text>
+      </Layout>
     </Layout>
     <FAB
       iconName="close"

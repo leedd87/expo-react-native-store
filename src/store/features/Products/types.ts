@@ -7,4 +7,5 @@ export interface Product {
   image?: string;
   favorite?: boolean;
   stock?: number;
+  quantity?: string;
 }

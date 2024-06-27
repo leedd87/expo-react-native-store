@@ -40,6 +40,7 @@ export const CartScreen = () => {
                   onPress={() => {
                     onPressRemoveCartProduct(item.id);
                   }}
+                  quantity={item.quantity}
                 />
               )}
               ListFooterComponent={() => <Layout style={{ height: 100 }} />}

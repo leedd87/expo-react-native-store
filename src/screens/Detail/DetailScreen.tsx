@@ -27,17 +27,17 @@ export const DetailScreen = () => {
   const { currentData: singleProduct, isLoading } =
     useGetSingleProductQuery(id);
 
-  const [count, setCount] = useState(0);
+  const [quantity, setQuantity] = useState(0);
   const addStock = () => {
-    setCount(count + 1);
+    setQuantity(quantity + 1);
   };
 
   const removeStock = () => {
-    setCount(count - 1);
+    setQuantity(quantity - 1);
   };
 
   const onPressAddCartProduct = () => {
-    dispatch(addCartProduct({ ...singleProduct, stock: 2 }));
+    dispatch(addCartProduct({ ...singleProduct, quantity: quantity }));
     navigation.navigate('TabNavigator', { screen: 'Cart' });
   };
 
@@ -91,13 +91,24 @@ export const DetailScreen = () => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
                 gap: 10,
+                marginTop: 20,
               }}
             >
-              <Button onPress={removeStock}>
+              <Button
+                onPress={removeStock}
+                disabled={quantity <= 0 ? true : false}
+              >
                 <Text>-</Text>
               </Button>
-              <Text category="h4">{count}</Text>
-              <Button onPress={addStock} disabled={true}>
+              <Text category="h4">{quantity}</Text>
+              <Button
+                onPress={addStock}
+                disabled={
+                  singleProduct?.stock && quantity >= singleProduct?.stock
+                    ? true
+                    : false
+                }
+              >
                 <Text>+</Text>
               </Button>
             </Layout>
