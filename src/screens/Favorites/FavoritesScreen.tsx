@@ -20,6 +20,10 @@ export const FavoritesScreen = () => {
     dispatch(removeFavoriteProduct(item?.id));
     dispatch(toggleFavoriteProduct(item?.id));
   };
+  console.log(
+    '🚀 ~ file: FavoritesScreen.tsx:25 ~ FavoritesScreen ~ favoriteProducst:',
+    favoriteProducst
+  );
 
   return (
     <Layout

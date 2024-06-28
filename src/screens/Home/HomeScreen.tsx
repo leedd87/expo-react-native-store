@@ -44,6 +44,7 @@ export const HomeScreen = () => {
 
   const onPressSaveRemoveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
+    console.log(item);
     const selectedProduct = favoriteProducts?.find(
       (product) => product.id === item.id
     );

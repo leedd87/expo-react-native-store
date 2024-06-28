@@ -3,7 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { Provider } from 'react-redux';
-import { store } from './src/store/index';
+import { persistor, store } from './src/store/index';
 import { MainStackNavigator } from './src/navigation/MainStackNavigator/MainStackNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import * as eva from '@eva-design/eva';
@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { PersistGate } from 'redux-persist/integration/react';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -46,8 +47,10 @@ export default function App() {
       <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
         <NavigationContainer>
           <Provider store={store}>
-            <MainStackNavigator />
-            <StatusBar style="auto" />
+            <PersistGate loading={null} persistor={persistor}>
+              <MainStackNavigator />
+              <StatusBar style="auto" />
+            </PersistGate>
           </Provider>
         </NavigationContainer>
       </ApplicationProvider>
