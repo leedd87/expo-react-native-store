@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  useAddNewProductMutation,
-  useDeleteProductMutation,
-  useGetAllProductsQuery,
-} from '../../store/features/Products/productsApiSlice';
+import { useGetAllProductsQuery } from '../../store/features/Products/productsApiSlice';
 import { useGetAllCategoriesQuery } from '../../store/features/Categories/categoriesApiSlice';
 import { Product } from '../../store/features/Products/types';
 
@@ -22,6 +18,7 @@ import {
   addFavoriteProduct,
   removeFavoriteProduct,
 } from '../../store/features/Favorites/favoritesSlice';
+import { styles } from './styles';
 
 export const HomeScreen = () => {
   const theme = useTheme();
@@ -38,9 +35,6 @@ export const HomeScreen = () => {
 
   const { currentData: apiAllProducts } = useGetAllProductsQuery();
   const { currentData: apiAllCategories } = useGetAllCategoriesQuery();
-  const [addNewProduct, addNewProductResults] = useAddNewProductMutation();
-  const [deleteProduct, { isLoading, data, status, originalArgs }] =
-    useDeleteProductMutation();
 
   const onPressSaveRemoveFavoriteProduct = (item: Product) => {
     dispatch(addFavoriteProduct(item));
@@ -69,13 +63,8 @@ export const HomeScreen = () => {
   };
 
   return (
-    <Layout
-      style={{
-        flex: 1,
-        paddingTop: top,
-      }}
-    >
-      <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+    <Layout style={[styles.container, { paddingTop: top }]}>
+      <Layout style={styles.layoutContainer}>
         <Text category="h1">Home</Text>
         <Button
           onPress={getProducts}
@@ -85,14 +74,12 @@ export const HomeScreen = () => {
         </Button>
       </Layout>
 
-      <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+      <Layout style={styles.layoutContainer}>
         <List
-          style={{
-            backgroundColor: theme['color-basic-800'],
-          }}
+          style={{ backgroundColor: theme['color-basic-800'] }}
           data={apiAllCategories}
           renderItem={({ item }) => (
-            <Layout style={{ marginEnd: 5 }}>
+            <Layout style={styles.categoryContainer}>
               <CategoryBtn
                 onPress={handleCategoryPress}
                 item={item}
@@ -104,7 +91,7 @@ export const HomeScreen = () => {
           horizontal={true}
         />
       </Layout>
-      <Layout style={{ marginTop: 20, gap: 20 }}>
+      <Layout style={styles.listContainer}>
         {allProducts ? (
           <List
             data={allProducts}
