@@ -1,5 +1,4 @@
 import { Button, useTheme } from '@ui-kitten/components';
-import { useState } from 'react';
 
 interface CategoryBtnProps {
   item: string;
