@@ -1,6 +1,7 @@
 import React from 'react';
 import { Icon, useTheme } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import { styles } from './styles';
 
 interface CustomIconProps {
   name: string;
@@ -27,10 +28,3 @@ export const CustomIcon = ({
 
   return <Icon style={styles.icon} name={name} fill={color} stroke={color} />;
 };
-
-const styles = StyleSheet.create({
-  icon: {
-    width: 32,
-    height: 32,
-  },
-});
