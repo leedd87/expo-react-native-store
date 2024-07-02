@@ -15,6 +15,7 @@ import { ActivityIndicator } from 'react-native';
 import { DetailProduct } from './components';
 import { useGetSingleProductQuery } from '../../store/features/Products/productsApiSlice';
 import { addCartProduct } from '../../store/features/Cart/cartSlice';
+import { styles } from './styles';
 
 export const DetailScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -42,40 +43,22 @@ export const DetailScreen = () => {
   };
 
   return (
-    <Layout
-      style={{
-        paddingHorizontal: 30,
-        flex: 1,
-        paddingTop: top,
-        justifyContent: 'space-between',
-      }}
-    >
+    <Layout style={[styles.container, { paddingTop: top }]}>
       {isLoading ? (
-        <Layout
-          style={{
-            justifyContent: 'center',
-            flex: 1,
-          }}
-        >
+        <Layout style={styles.spinnerContainer}>
           <ActivityIndicator size="large" color="#FE9000" />
         </Layout>
       ) : (
         <>
           <Layout>
-            <Layout
-              style={{
-                paddingTop: 30 * 0.35,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
+            <Layout style={styles.headerContainer}>
               <Text category="h1">Detail</Text>
             </Layout>
 
             <FAB
               iconName="arrow-back"
               onPress={() => navigation.goBack()}
-              style={{ position: 'absolute', top: 0, left: 0 }}
+              style={styles.fabStyles}
             />
             <Layout style={{ margin: 20 }} />
             <DetailProduct
@@ -85,15 +68,7 @@ export const DetailScreen = () => {
               price={singleProduct?.price}
               stock={singleProduct?.stock}
             />
-            <Layout
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                gap: 10,
-                marginTop: 20,
-              }}
-            >
+            <Layout style={styles.btnStyle}>
               <Button
                 onPress={removeStock}
                 disabled={quantity <= 0 ? true : false}
@@ -117,9 +92,7 @@ export const DetailScreen = () => {
             <FAB
               iconName="shopping-cart"
               onPress={onPressAddCartProduct}
-              style={{
-                marginBottom: 30,
-              }}
+              style={{ marginBottom: 30 }}
             />
           </Layout>
         </>

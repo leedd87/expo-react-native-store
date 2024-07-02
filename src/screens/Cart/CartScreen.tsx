@@ -5,6 +5,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks';
 import CartProduct from './components/CartProduct/CartProduct';
 import { removeCartProduct } from '../../store/features/Cart/cartSlice';
+import { styles } from './styles';
+import { commonStyles } from '../../common/commonStyles';
 
 export const CartScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -16,18 +18,12 @@ export const CartScreen = () => {
   };
 
   return (
-    <Layout
-      style={{
-        flex: 1,
-        paddingTop: top,
-        justifyContent: 'space-between',
-      }}
-    >
+    <Layout style={[styles.container, { paddingTop: top }]}>
       <Layout>
-        <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+        <Layout style={commonStyles.layoutContainer}>
           <Text category="h1">Cart</Text>
         </Layout>
-        <Layout style={{ marginTop: 20, gap: 20 }}>
+        <Layout style={styles.listContainer}>
           {cartProducts ? (
             <List
               data={cartProducts}
@@ -50,7 +46,7 @@ export const CartScreen = () => {
         </Layout>
       </Layout>
       {cartProducts!.length > 0 ? (
-        <Layout style={{ marginBottom: 20, paddingHorizontal: 30 }}>
+        <Layout style={styles.buyBtn}>
           <Button onPress={() => {}}>Finalizar compra</Button>
         </Layout>
       ) : null}

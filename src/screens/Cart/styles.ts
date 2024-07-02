@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  categoryContainer: {
-    marginEnd: 5,
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
   },
   listContainer: {
     marginTop: 20,
     gap: 20,
+  },
+  buyBtn: {
+    marginBottom: 20,
+    paddingHorizontal: 30,
   },
 });

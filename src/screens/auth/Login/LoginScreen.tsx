@@ -4,6 +4,8 @@ import { CustomIcon } from '../../../common/CustomIcon/CustomIcon';
 import { useLogInMutation } from '../../../store/features/Auth/authApiSlice';
 import { useAppDispatch } from '../../../store/hooks/hooks';
 import { setLogIn } from '../../../store/features/Auth/authSlice';
+import { styles } from './styles';
+import { commonStyles } from '../../../common/commonStyles';
 
 export const LoginScreen = () => {
   const dispatch = useAppDispatch();
@@ -34,24 +36,17 @@ export const LoginScreen = () => {
   // }, [data]);
 
   return (
-    <Layout
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 30,
-      }}
-    >
-      <Layout style={{ paddingTop: 30 * 0.35 }}>
+    <Layout style={styles.container}>
+      <Layout style={[commonStyles.layoutContainer, { paddingHorizontal: 0 }]}>
         <Text category="h1">Login</Text>
       </Layout>
-      <Layout style={{ marginTop: 20 }}>
+      <Layout style={styles.inputContainer}>
         <Input
           placeholder="email"
           keyboardType="email-address"
           autoCapitalize="none"
           value={form.email}
           onChangeText={(email) => setForm({ ...form, email })}
-          style={{ marginBottom: 10 }}
           accessoryLeft={<CustomIcon name="email-outline" />}
         />
         <Input
@@ -60,7 +55,6 @@ export const LoginScreen = () => {
           value={form.password}
           onChangeText={(password) => setForm({ ...form, password })}
           secureTextEntry
-          style={{ marginBottom: 10 }}
           accessoryLeft={<CustomIcon name="lock-outline" />}
         />
       </Layout>

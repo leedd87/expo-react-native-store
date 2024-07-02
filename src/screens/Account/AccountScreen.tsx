@@ -4,6 +4,8 @@ import { CustomIcon } from '../../common/CustomIcon/CustomIcon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAppDispatch } from '../../store/hooks/hooks';
 import { logOut } from '../../store/features/Auth/authSlice';
+import { commonStyles } from '../../common/commonStyles';
+import { styles } from './styles';
 
 export const AccountScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -14,16 +16,18 @@ export const AccountScreen = () => {
   };
   return (
     <Layout
-      style={{
-        flex: 1,
-        paddingTop: top,
-        paddingHorizontal: 30,
-      }}
+      style={[
+        commonStyles.container,
+        {
+          paddingTop: top,
+          paddingHorizontal: 30,
+        },
+      ]}
     >
-      <Layout style={{ paddingTop: 30 * 0.35 }}>
+      <Layout style={[commonStyles.layoutContainer, { paddingHorizontal: 0 }]}>
         <Text category="h1">Account</Text>
       </Layout>
-      <Layout style={{ marginTop: 20 }}>
+      <Layout style={styles.btnContainer}>
         <Button
           onPress={cerrarSesion}
           accessoryRight={<CustomIcon name="arrow-forward-outline" white />}

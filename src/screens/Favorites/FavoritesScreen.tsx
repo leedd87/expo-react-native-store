@@ -8,6 +8,8 @@ import { FavoriteProduct } from './components';
 import { removeFavoriteProduct } from '../../store/features/Favorites/favoritesSlice';
 import { Product } from '../../store/features/Products/types';
 import { toggleFavoriteProduct } from '../../store/features/Products/productsSlice';
+import { styles } from './styles';
+import { commonStyles } from '../../common/commonStyles';
 
 export const FavoritesScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
@@ -20,22 +22,13 @@ export const FavoritesScreen = () => {
     dispatch(removeFavoriteProduct(item?.id));
     dispatch(toggleFavoriteProduct(item?.id));
   };
-  console.log(
-    '🚀 ~ file: FavoritesScreen.tsx:25 ~ FavoritesScreen ~ favoriteProducst:',
-    favoriteProducst
-  );
 
   return (
-    <Layout
-      style={{
-        flex: 1,
-        paddingTop: top,
-      }}
-    >
-      <Layout style={{ paddingTop: 30 * 0.35, paddingHorizontal: 30 }}>
+    <Layout style={[commonStyles.container, { paddingTop: top }]}>
+      <Layout style={commonStyles.layoutContainer}>
         <Text category="h1">Favorites</Text>
       </Layout>
-      <Layout style={{ marginTop: 20, gap: 20 }}>
+      <Layout style={styles.listContainer}>
         {favoriteProducst ? (
           <List
             data={favoriteProducst}

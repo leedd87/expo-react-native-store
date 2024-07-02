@@ -1,6 +1,7 @@
 import { Image } from 'react-native';
 import React from 'react';
 import { Layout, Text } from '@ui-kitten/components';
+import { styles } from './styles';
 
 interface DetailProductProps {
   image?: string;
@@ -15,30 +16,11 @@ export const DetailProduct = ({
   title,
   price,
   description,
-  stock,
 }: DetailProductProps) => {
   return (
-    <Layout
-      style={{
-        gap: 20,
-        justifyContent: 'space-between',
-      }}
-    >
-      <Layout
-        style={{
-          backgroundColor: 'white',
-          paddingBottom: 15,
-        }}
-      >
-        <Image
-          source={{ uri: image }}
-          style={{
-            height: 200,
-            width: '100%',
-            resizeMode: 'contain',
-            marginTop: 15,
-          }}
-        />
+    <Layout style={styles.container}>
+      <Layout style={styles.imageContainer}>
+        <Image source={{ uri: image }} style={styles.imageStyles} />
       </Layout>
       <Text category="h6">{title}</Text>
       <Text category="h2">{`$ ${price}`}</Text>

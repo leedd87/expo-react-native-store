@@ -19,6 +19,7 @@ import {
   removeFavoriteProduct,
 } from '../../store/features/Favorites/favoritesSlice';
 import { styles } from './styles';
+import { commonStyles } from '../../common/commonStyles';
 
 export const HomeScreen = () => {
   const theme = useTheme();
@@ -63,8 +64,8 @@ export const HomeScreen = () => {
   };
 
   return (
-    <Layout style={[styles.container, { paddingTop: top }]}>
-      <Layout style={styles.layoutContainer}>
+    <Layout style={[commonStyles.container, { paddingTop: top }]}>
+      <Layout style={commonStyles.layoutContainer}>
         <Text category="h1">Home</Text>
         <Button
           onPress={getProducts}
@@ -74,7 +75,7 @@ export const HomeScreen = () => {
         </Button>
       </Layout>
 
-      <Layout style={styles.layoutContainer}>
+      <Layout style={commonStyles.layoutContainer}>
         <List
           style={{ backgroundColor: theme['color-basic-800'] }}
           data={apiAllCategories}
