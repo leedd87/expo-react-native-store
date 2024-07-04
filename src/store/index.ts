@@ -1,11 +1,8 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { productsApi } from './features/Products/productsApiSlice';
 import { categoriesApi } from './features/Categories/categoriesApiSlice';
 import { authApi } from './features/Auth/authApiSlice';
-import productsSlice from './features/Products/productsSlice';
-import authSlice from './features/Auth/authSlice';
-import favoritesSlice from './features/Favorites/favoritesSlice';
-import cartSlice from './features/Cart/cartSlice';
+
 import {
   FLUSH,
   REHYDRATE,
@@ -17,6 +14,7 @@ import {
   persistReducer,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { rootReducer } from './reducers/reducers';
 
 const persistConfig = {
   key: 'root',
@@ -29,16 +27,6 @@ const persistConfig = {
     '[categoriesApi.reducerPath]',
   ],
 };
-
-const rootReducer = combineReducers({
-  [authApi.reducerPath]: authApi.reducer,
-  [productsApi.reducerPath]: productsApi.reducer,
-  [categoriesApi.reducerPath]: categoriesApi.reducer,
-  authSlice,
-  productsSlice,
-  favoritesSlice,
-  cartSlice,
-});
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
