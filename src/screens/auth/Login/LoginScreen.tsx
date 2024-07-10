@@ -21,19 +21,10 @@ export const LoginScreen = () => {
       email: form.email,
       password: form.password,
     }).unwrap();
+    //TODO isSuccess?():()
     console.log(result);
     dispatch(setLogIn(result));
   };
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     console.log('EL LOGIN FUE SUCCESS');
-  //   }
-  // }, [isSuccess]);
-
-  // useEffect(() => {
-  //   console.log('RESULTADOS POST LOGIN', data);
-  // }, [data]);
 
   return (
     <Layout style={styles.container}>
