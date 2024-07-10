@@ -19,28 +19,18 @@ import { rootReducer } from './reducers/reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whitelist: [
-    'authSlice',
-    'cartSlice',
-    'favoritesSlice',
-    'productsSlice',
-    '[categoriesApi.reducerPath]',
-  ],
+  // whitelist: [
+  //   'authSlice',
+  //   'cartSlice',
+  //   'favoritesSlice',
+  //   'productsSlice',
+  //   '[categoriesApi.reducerPath]',
+  // ],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  // reducer: {
-  //   //ACA VAN LOS REDUCERS DE LA APP
-  //   [authApi.reducerPath]: authApi.reducer,
-  //   [productsApi.reducerPath]: productsApi.reducer,
-  //   [categoriesApi.reducerPath]: categoriesApi.reducer,
-  //   authSlice,
-  //   productsSlice,
-  //   favoritesSlice,
-  //   cartSlice,
-  // },
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
